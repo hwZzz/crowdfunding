@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="crowdfunding-admin-webui" />
-        <module name="crowdfunding-admin-component" />
-        <module name="crowdfunding-common-reverse" />
-        <module name="crowdfunding-admin-entity" />
         <module name="crowdfunding-common-util" />
+        <module name="crowdfunding-admin-entity" />
+        <module name="crowdfunding-admin-component" />
+        <module name="crowdfunding-admin-webui" />
+        <module name="crowdfunding-common-reverse" />
       </profile>
     </annotationProcessing>
   </component>
