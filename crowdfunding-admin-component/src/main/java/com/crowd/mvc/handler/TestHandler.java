@@ -3,6 +3,7 @@ package com.crowd.mvc.handler;
 import com.crowd.entity.Admin;
 import com.crowd.entity.Student;
 import com.crowd.service.api.AdminService;
+import com.crowd.util.CrowdUtil;
 import com.crowd.util.ResultEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -49,20 +51,25 @@ public class TestHandler {
 
     @ResponseBody
     @RequestMapping("/send/compose/object.json")
-    public ResultEntity<Student> testReceiveComposeObject(@RequestBody Student student){
+    public ResultEntity<Student> testReceiveComposeObject(@RequestBody Student student,HttpServletRequest request){
+        boolean judgeRequest = CrowdUtil.judgeRequestType(request);
+
+        logger.info("judgeRequest="+judgeRequest);
+
         logger.info(student.toString());
-        System.out.println(student.toString());
+       // System.out.println(student.toString());
 
         //将“查询”到的Student对象封装到ResultEntity中返回
         return ResultEntity.successWithData(student);
     }
 
     @RequestMapping("/test/ssm.html")
-    public String testSsm(ModelMap modelMap){
-
+    public String testSsm(ModelMap modelMap, HttpServletRequest request){
+        boolean judgeRequest = CrowdUtil.judgeRequestType(request);
+        logger.info("judgeRequest="+judgeRequest);
         List<Admin> adminList = adminService.getAll();
         modelMap.addAttribute("adminList",adminList);
-        System.out.println(10/0);
+        //System.out.println(10/0);
         return "target";
     }
 }

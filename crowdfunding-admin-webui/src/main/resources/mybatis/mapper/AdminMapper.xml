@@ -70,6 +70,13 @@
   <sql id="Base_Column_List">
     id, login, user_pswd, user_name, email, create_time
   </sql>
+  <select id="selectAdminByKeyword" resultMap="BaseResultMap">
+    select id, login, user_pswd, user_name, email, create_time
+    from t_admin
+    where login like concat("%",#{keyword},"%") or
+          user_name like concat("%",#{keyword},"%") or
+          email like concat("%",#{keyword},"%")
+  </select>
   <select id="selectByExample" parameterType="com.crowd.entity.AdminExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -99,6 +106,9 @@
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
+  </delete>
+  <delete id="deleteOldRelationship">
+    delete from inner_admin_role where admin_id=#{adminId}
   </delete>
   <insert id="insert" parameterType="com.crowd.entity.Admin">
     insert into t_admin (id, login, user_pswd,
@@ -150,6 +160,10 @@
         #{createTime,jdbcType=CHAR},
       </if>
     </trim>
+  </insert>
+  <insert id="insertNewRelationship">
+    insert into inner_admin_role(admin_id, role_id) VALUES
+    <foreach collection="roleIdList" item="roleId" separator=",">(#{adminId},#{roleId})</foreach>
   </insert>
   <select id="countByExample" parameterType="com.crowd.entity.AdminExample" resultType="java.lang.Long">
     select count(*) from t_admin

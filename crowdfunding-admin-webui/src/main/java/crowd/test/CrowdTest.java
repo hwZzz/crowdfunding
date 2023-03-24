@@ -1,7 +1,9 @@
 package crowd.test;
 
 import com.crowd.entity.Admin;
+import com.crowd.entity.Role;
 import com.crowd.mapper.AdminMapper;
+import com.crowd.mapper.RoleMapper;
 import com.crowd.service.api.AdminService;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +28,16 @@ public class CrowdTest {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Test
+    public void testRoleSave(){
+        for (int i = 0; i < 235; i++) {
+            roleMapper.insert(new Role(null,"role"+i));
+        }
+    }
 
     @Test
     public void testInsertAdmin(){
